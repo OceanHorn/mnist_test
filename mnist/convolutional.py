@@ -33,7 +33,7 @@ with tf.Session() as sess:
     if ckpt and ckpt.model_checkpoint_path:
         saver.restore(sess, ckpt.model_checkpoint_path)
 
-    for i in range(1000):
+    for i in range(1400):
         batch = data.train.next_batch(50)
         if i % 100 == 0:
             train_accuracy = accuracy.eval(feed_dict={
@@ -41,26 +41,23 @@ with tf.Session() as sess:
                 y1: batch[1],
                 keep_prob: 1.0
             })
-            print("setp %d, train accuracy=%d" % (i, train_accuracy))
+            print("step %d, train accuracy=%f" % (i, train_accuracy))
         sess.run(
             train_step, feed_dict={
                 x: batch[0],
                 y1: batch[1],
                 keep_prob: 0.5
             })
-        print(
-            sess.run(
-                accuracy,
-                feed_dict={
-                    x: data.test.images,
-                    y1: data.test.labels,
-                    keep_prob: 1.0
-                }))
-        path = saver.save(
-            sess,
-            os.path.join(
-                os.path.dirname(__file__), 'data', 'convolutional.ckpt'),
-            write_meta_graph=False,
-            write_state=False)
-
-        print("Saved:", path)
+        if i % 100 == 0:
+            print(sess.run(accuracy,
+                           feed_dict={
+                               x: data.test.images,
+                               y1: data.test.labels,
+                               keep_prob: 1.0
+                           }))
+        path = saver.save(sess,
+                          os.path.join(os.path.dirname(__file__), 'data', 'convolutional.ckpt'),
+                          write_meta_graph=False,
+                          write_state=False)
+        if i % 100 == 0:
+            print("Saved:", path)
