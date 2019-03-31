@@ -25,7 +25,7 @@ with tf.variable_scope("regression"):
     print(model.regression(x))
     y1, variables = model.regression(x)
 saver = tf.train.Saver(variables)
-regression_file = tf.train.latest_checkpoint("mnist/data/regreesion.ckpt")
+regression_file = tf.train.latest_checkpoint("mnist/data/regression.ckpt")
 if regression_file is not None:
     saver.restore(sess, regression_file)
 
@@ -72,4 +72,4 @@ def main():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='127.0.0.1', port=8000)

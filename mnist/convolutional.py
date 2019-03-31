@@ -29,11 +29,11 @@ with tf.Session() as sess:
 
     # 断点续训
     ckpt = tf.train.get_checkpoint_state(
-        os.path.join(os.path.dirname(__file__), 'data', 'convalution.ckpt'))
+        os.path.join(os.path.dirname(__file__), 'data', 'convolutional.ckpt'))
     if ckpt and ckpt.model_checkpoint_path:
         saver.restore(sess, ckpt.model_checkpoint_path)
 
-    for i in range(20000):
+    for i in range(1000):
         batch = data.train.next_batch(50)
         if i % 100 == 0:
             train_accuracy = accuracy.eval(feed_dict={
@@ -59,7 +59,7 @@ with tf.Session() as sess:
         path = saver.save(
             sess,
             os.path.join(
-                os.path.dirname(__file__), 'data', 'convalution.ckpt'),
+                os.path.dirname(__file__), 'data', 'convolutional.ckpt'),
             write_meta_graph=False,
             write_state=False)
 
