@@ -103,6 +103,10 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# PyCharm
+.idea/
+
+# data
 mnist/MNIST_data/
 mnist/data/
 mnist/mnist_log/
